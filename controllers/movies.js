@@ -18,8 +18,10 @@ const createMovie = (req, res, next) => {
     duration,
     year,
     description,
-    image, trailer,
-    thumbnail, movieId,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
     nameRU,
     nameEN,
   } = req.body;
@@ -31,7 +33,7 @@ const createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     thumbnail,
     movieId,
     nameRU,
@@ -40,6 +42,7 @@ const createMovie = (req, res, next) => {
   })
     .then((movie) => res.status(SUCCESS_CREATE_CODE).send({ data: movie }))
     .catch((err) => {
+      console.log(err);
       if (err.name === 'ValidationError') return next(new ValidationError(`Произошла ошибка, введенные данные неверны. ${err.message}`));
       return next(err);
     });
@@ -48,8 +51,11 @@ const createMovie = (req, res, next) => {
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
     .orFail(new NotFoundError('Запрашиваемый фильм не найден'))
-    .then((movie) => Movie.deleteOne(movie))
-    .then(() => res.send({ message: 'Фильм удален' }))
+    .then((movie) => Movie.deleteOne({ _id: movie.id, owner: req.user._id }))
+    .then((result) => {
+      console.log(result);
+      res.send({ message: 'Фильм удален' });
+    })
     .catch((err) => {
       if (err.name === 'CastError') return next(new ValidationError(`Некоректно задан id. ${err.message}`));
       return next(err);

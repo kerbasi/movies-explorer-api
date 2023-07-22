@@ -55,11 +55,11 @@ const movieSchema = new mongoose.Schema({
     type: Number,
     required: [true, mustBeFilled('movieId')],
   },
-  nameRu: {
+  nameRU: {
     type: String,
     required: [true, mustBeFilled('nameRu')],
   },
-  nameEn: {
+  nameEN: {
     type: String,
     required: [true, mustBeFilled('nameEn')],
   },
