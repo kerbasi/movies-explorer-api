@@ -8,7 +8,8 @@ const ValidationError = require('../errors/validation-error');
 const TokenError = require('../errors/token-error');
 const DuplicateError = require('../errors/duplicate-error');
 
-const { SUCCESS_CREATE_CODE, SECRET_KEY_DEV } = require('../utils/constants');
+const { SUCCESS_CREATE_CODE } = require('../utils/constants');
+const { SECRET_KEY_DEV } = require('../utils/configuration');
 
 const { NODE_ENV, SECRET_KEY } = process.env;
 
