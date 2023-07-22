@@ -12,6 +12,6 @@ router.get('/', findAllMovies);
 
 router.post('/', celebrate(celebrateValidationCreateMovie), createMovie);
 
-router.delete('/:cardId', celebrate(celebrateValidationDeleteMovie), deleteMovie);
+router.delete('/:movieId', celebrate(celebrateValidationDeleteMovie), deleteMovie);
 
 module.exports = router;

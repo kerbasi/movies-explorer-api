@@ -2,6 +2,7 @@ const Movie = require('../models/movie');
 
 const NotFoundError = require('../errors/not-found-error');
 const ValidationError = require('../errors/validation-error');
+const PermissionError = require('../errors/permission-error');
 
 const { SUCCESS_CREATE_CODE } = require('../utils/constants');
 
@@ -42,18 +43,20 @@ const createMovie = (req, res, next) => {
   })
     .then((movie) => res.status(SUCCESS_CREATE_CODE).send({ data: movie }))
     .catch((err) => {
-      console.log(err);
       if (err.name === 'ValidationError') return next(new ValidationError(`Произошла ошибка, введенные данные неверны. ${err.message}`));
       return next(err);
     });
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findOne({ movieId: req.params.movieId })
     .orFail(new NotFoundError('Запрашиваемый фильм не найден'))
     .then((movie) => Movie.deleteOne({ movieId: movie.movieId, owner: req.user._id }))
     .then((result) => {
       console.log(result);
+      if (result.deletedCount === 0) {
+        throw new PermissionError('Этот фильм не пренадлежит текущему пользователю');
+      }
       res.send({ message: 'Фильм удален' });
     })
     .catch((err) => {
