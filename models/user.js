@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 const bcrypt = require('bcryptjs');
+const mustBeFilled = require('../utils/helpers');
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: [true, 'Поле Email обязательно должно быть заполнено'],
+    required: [true, mustBeFilled('email')],
     unique: [true, 'Поле Email должно быть уникальным'],
     validate: {
       validator: (email) => isEmail(email),
@@ -14,14 +15,14 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Поле Password обязательно должно быть заполнено'],
+    required: [true, mustBeFilled('password')],
     select: false,
   },
   name: {
     type: String,
-    required: [true, 'Поле Name обязательно должно быть заполнено'],
-    minlength: [2, 'Поле Name должно быть не менее 2 символов'],
-    maxlength: [2, 'Поле Name должно быть не более 30 символов'],
+    required: [true, mustBeFilled('name')],
+    minlength: [2, 'Поле Name должно быть не менее 2 символов, было введено {VALUE}'],
+    maxlength: [2, 'Поле Name должно быть не более 30 символов, было введено {VALUE}'],
   },
 }, {
   versionKey: false,
