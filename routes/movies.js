@@ -1,40 +1,17 @@
 const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
-const { REGEXP_LINK } = require('../utils/constants');
+const { celebrate } = require('celebrate');
+const { celebrateValidationCreateMovie, celebrateValidationDeleteMovie } = require('../middlewares/celebrateValidation');
 
 const {
-  createCard,
-  findAllCards,
-  deleteCard,
-  likeCard,
-  dislikeCard,
+  createMovie,
+  findAllMovies,
+  deleteMovie,
 } = require('../controllers/cards');
 
-router.get('/', findAllCards);
+router.get('/', findAllMovies);
 
-router.post('/', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    link: Joi.string().regex(REGEXP_LINK).required(),
-  }),
-}), createCard);
+router.post('/', celebrate(celebrateValidationCreateMovie), createMovie);
 
-router.delete('/:cardId', celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().length(24).hex().required(),
-  }),
-}), deleteCard);
-
-router.put('/:cardId/likes', celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().length(24).hex().required(),
-  }),
-}), likeCard);
-
-router.delete('/:cardId/likes', celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().length(24).hex().required(),
-  }),
-}), dislikeCard);
+router.delete('/:cardId', celebrate(celebrateValidationDeleteMovie), deleteMovie);
 
 module.exports = router;

@@ -25,8 +25,32 @@ const celebrateValidationPatchMe = {
   }),
 };
 
+const celebrateValidationCreateMovie = {
+  body: Joi.object().keys({
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().regex(REGEXP_LINK),
+    trailer: Joi.string().required().regex(REGEXP_LINK),
+    thumbnail: Joi.string().required().regex(REGEXP_LINK),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    movieId: Joi.number().required(),
+  }),
+};
+
+const celebrateValidationDeleteMovie = {
+  params: Joi.object().keys({
+    movieId: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   celebrateValidationSignin,
   celebrateValidationSignup,
   celebrateValidationPatchMe,
+  celebrateValidationCreateMovie,
+  celebrateValidationDeleteMovie,
 };
