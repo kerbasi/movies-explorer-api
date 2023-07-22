@@ -8,9 +8,9 @@ const ValidationError = require('../errors/validation-error');
 const TokenError = require('../errors/token-error');
 const DuplicateError = require('../errors/duplicate-error');
 
-const { SUCCESS_CREATE_CODE } = require('../utils/constants');
+const { SUCCESS_CREATE_CODE, SECRET_KEY_DEV } = require('../utils/constants');
 
-const { MODE_ENV, SECRET_KEY } = process.env;
+const { NODE_ENV, SECRET_KEY } = process.env;
 
 const findMe = (req, res, next) => {
   User.findById(req.user._id)
@@ -77,7 +77,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        MODE_ENV !== 'production' ? 'some-secret-key' : SECRET_KEY,
+        NODE_ENV !== 'production' ? SECRET_KEY_DEV : SECRET_KEY,
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
