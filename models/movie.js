@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const isUrl = require('validator/lib/isURL');
-const mustBeFilled = require('../utils/helpers');
+const { mustBeFilled } = require('../utils/helpers');
 
 const movieSchema = new mongoose.Schema({
   country: {

@@ -8,9 +8,9 @@ const cardRouter = require('./movies');
 const notFoundRouter = require('./notFound');
 const auth = require('../middlewares/auth');
 
-router.post('/signin', loginRouter);
-router.post('/signout', logoutRouter);
-router.post('/signup', createUserRouter);
+router.use('/signin', loginRouter);
+router.use('/signout', logoutRouter);
+router.use('/signup', createUserRouter);
 
 router.use('/movies', auth, cardRouter);
 router.use('/users', auth, userRouter);

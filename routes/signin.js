@@ -5,6 +5,6 @@ const { celebrateValidationSignin } = require('../middlewares/celebrateValidatio
 
 const { login } = require('../controllers/users');
 
-router.post('/signin', celebrate(celebrateValidationSignin), login);
+router.post('/', celebrate(celebrateValidationSignin), login);
 
 module.exports = router;
