@@ -51,8 +51,9 @@ const createMovie = (req, res, next) => {
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
     .orFail(new NotFoundError('Запрашиваемый фильм не найден'))
-    .then((movie) => Movie.deleteOne({ _id: movie.id, owner: req.user._id }))
+    .then((movie) => Movie.deleteOne({ movieId: movie.movieId, owner: req.user._id }))
     .then((result) => {
+      console.log(result);
       res.send({ message: 'Фильм удален' });
     })
     .catch((err) => {
