@@ -24,7 +24,7 @@ const findMe = (req, res, next) => {
       throw new NotFoundError('Запрашиваемый юзер не найден.');
     })
     .catch((err) => {
-      if (err.name === 'CastError') return next(new ValidationError(`Некоректно задан id. ${err.message}`));
+      if (err.name === 'CastError') return next(new ValidationError('Некоректно задан id.'));
       return next(err);
     });
 };
@@ -46,7 +46,7 @@ const updateMe = (req, res, next) => {
       about: user.name,
     }))
     .catch((err) => {
-      if (err.name === 'ValidationError') return next(new ValidationError(`Произошла ошибка, введенные данные неверны. ${err.message}`));
+      if (err.name === 'ValidationError') return next(new ValidationError('Произошла ошибка, введенные данные неверны.'));
       return next(err);
     });
 };
@@ -65,8 +65,8 @@ const createUser = (req, res, next) => {
       _id: user._id,
     }))
     .catch((err) => {
-      if (err.code === 11000) return next(new DuplicateError(`Уже есть пользователь с данным email. ${err.message}`));
-      if (err.name === 'ValidationError') return next(new ValidationError(`Произошла ошибка, введенные данные неверны. ${err.message}`));
+      if (err.code === 11000) return next(new DuplicateError('Уже есть пользователь с данным email.'));
+      if (err.name === 'ValidationError') return next(new ValidationError('Произошла ошибка, введенные данные неверны.'));
       return next(err);
     });
 };
@@ -87,7 +87,7 @@ const login = (req, res, next) => {
       });
       res.send({ message: 'Успешный логин' });
     })
-    .catch((err) => next(new TokenError(err.message)));
+    .catch(() => next(new TokenError('Неверный логин или пароль')));
 };
 
 const logout = (req, res) => {

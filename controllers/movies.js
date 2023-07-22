@@ -43,7 +43,7 @@ const createMovie = (req, res, next) => {
   })
     .then((movie) => res.status(SUCCESS_CREATE_CODE).send({ data: movie }))
     .catch((err) => {
-      if (err.name === 'ValidationError') return next(new ValidationError(`Произошла ошибка, введенные данные неверны. ${err.message}`));
+      if (err.name === 'ValidationError') return next(new ValidationError('Произошла ошибка, введенные данные неверны.'));
       return next(err);
     });
 };
@@ -59,7 +59,7 @@ const deleteMovie = (req, res, next) => {
       res.send({ message: 'Фильм удален' });
     })
     .catch((err) => {
-      if (err.name === 'CastError') return next(new ValidationError(`Некоректно задан id. ${err.message}`));
+      if (err.name === 'CastError') return next(new ValidationError('Некоректно задан id.'));
       return next(err);
     });
 };

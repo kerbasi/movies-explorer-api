@@ -8,8 +8,6 @@ const NOTFOUND_ERROR = 404;
 const DUPLICATE_ERROR = 409;
 const SERVER_ERROR = 500;
 
-const SECRET_KEY_DEV = 'some-secret-key';
-
 module.exports = {
   REGEXP_LINK,
   SUCCESS_CREATE_CODE,
@@ -19,5 +17,4 @@ module.exports = {
   NOTFOUND_ERROR,
   DUPLICATE_ERROR,
   SERVER_ERROR,
-  SECRET_KEY_DEV,
 };
