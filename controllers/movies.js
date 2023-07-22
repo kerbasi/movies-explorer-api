@@ -53,7 +53,6 @@ const deleteMovie = (req, res, next) => {
     .orFail(new NotFoundError('Запрашиваемый фильм не найден'))
     .then((movie) => Movie.deleteOne({ movieId: movie.movieId, owner: req.user._id }))
     .then((result) => {
-      console.log(result);
       if (result.deletedCount === 0) {
         throw new PermissionError('Этот фильм не пренадлежит текущему пользователю');
       }
