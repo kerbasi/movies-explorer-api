@@ -87,7 +87,7 @@ const login = (req, res, next) => {
       });
       res.send({ message: 'Успешный логин' });
     })
-    .catch(() => next(new TokenError('Неверный логин или пароль')));
+    .catch((err) => next(new TokenError(`Неверный логин или пароль, ${err.message}`)));
 };
 
 const logout = (req, res) => {
