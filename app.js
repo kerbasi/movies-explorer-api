@@ -36,4 +36,5 @@ app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
+  console.log(PORT, DB_URL);
 });
