@@ -6,7 +6,7 @@ const {
   createMovie,
   findAllMovies,
   deleteMovie,
-} = require('../controllers/cards');
+} = require('../controllers/movies');
 
 router.get('/', findAllMovies);
 
