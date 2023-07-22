@@ -1,7 +1,9 @@
+const { PERMISSION_ERROR } = require('../utils/constants');
+
 class PermissionError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 403;
+    this.statusCode = PERMISSION_ERROR;
   }
 }
 
