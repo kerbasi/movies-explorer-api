@@ -16,7 +16,7 @@ const errorHandler = require('./middlewares/error-handler');
 
 const { PORT_DEV, DB_URL_DEV } = require('./utils/configuration');
 
-const { PORT = PORT_DEV, DB_URL = DB_URL_DEV } = process.env;
+const { PORT = PORT_DEV, DB_URL = DB_URL_DEV, NODE_ENV, SECRET_KEY } = process.env;
 
 mongoose.connect(DB_URL);
 
@@ -37,4 +37,5 @@ app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
+  console.log(PORT, NODE_ENV, SECRET_KEY);
 });
