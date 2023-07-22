@@ -3,7 +3,7 @@ const router = require('express').Router();
 const { celebrate } = require('celebrate');
 
 const userRouter = require('./users');
-const cardRouter = require('./cards');
+const cardRouter = require('./movies');
 const notFoundRouter = require('./notFound');
 const auth = require('../middlewares/auth');
 
@@ -16,7 +16,7 @@ const { celebrateValidationSignin, celebrateValidationSignup } = require('../mid
 router.post('/signin', celebrate(celebrateValidationSignin), login);
 router.post('/signup', celebrate(celebrateValidationSignup), createUser);
 
-router.use('/cards', auth, cardRouter);
+router.use('/movies', auth, cardRouter);
 router.use('/users', auth, userRouter);
 router.use('*', auth, notFoundRouter);
 
