@@ -4,11 +4,11 @@ const { celebrateValidationCreateMovie, celebrateValidationDeleteMovie } = requi
 
 const {
   createMovie,
-  findAllMovies,
+  findAllUserMovies,
   deleteMovie,
 } = require('../controllers/movies');
 
-router.get('/', findAllMovies);
+router.get('/', findAllUserMovies);
 
 router.post('/', celebrate(celebrateValidationCreateMovie), createMovie);
 

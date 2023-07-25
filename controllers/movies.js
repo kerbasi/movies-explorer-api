@@ -6,8 +6,8 @@ const PermissionError = require('../errors/permission-error');
 
 const { SUCCESS_CREATE_CODE } = require('../utils/constants');
 
-const findAllMovies = (req, res, next) => {
-  Movie.find({})
+const findAllUserMovies = (req, res, next) => {
+  Movie.find({ owner: req.user._id })
     .then((cards) => res.send(cards))
     .catch(next);
 };
@@ -65,7 +65,7 @@ const deleteMovie = (req, res, next) => {
 };
 
 module.exports = {
-  findAllMovies,
+  findAllUserMovies,
   createMovie,
   deleteMovie,
 };
