@@ -8,7 +8,16 @@ const ValidationError = require('../errors/validation-error');
 const TokenError = require('../errors/token-error');
 const DuplicateError = require('../errors/duplicate-error');
 
-const { SUCCESS_CREATE_CODE } = require('../utils/constants');
+const {
+  SUCCESS_CREATE_CODE,
+  LOGIN_SUCCESS_TEXT,
+  LOGOUT_SUCCESS_TEXT,
+  VALIDATION_ERROR_TEXT,
+  VALIDATION_ERROR_ID_TEXT,
+  TOKEN_ERROR_TEXT,
+  NOTFOUND_ERROR_USER_TEXT,
+  DUPLICATE_ERROR_EMAIL_TEXT,
+} = require('../utils/constants');
 const { SECRET_KEY_DEV } = require('../utils/configuration');
 
 const { NODE_ENV, SECRET_KEY } = process.env;
@@ -22,10 +31,10 @@ const findMe = (req, res, next) => {
           name: user.name,
         });
       }
-      throw new NotFoundError('Запрашиваемый юзер не найден.');
+      throw new NotFoundError(NOTFOUND_ERROR_USER_TEXT);
     })
     .catch((err) => {
-      if (err.name === 'CastError') return next(new ValidationError('Некоректно задан id.'));
+      if (err.name === 'CastError') return next(new ValidationError(VALIDATION_ERROR_ID_TEXT));
       return next(err);
     });
 };
@@ -41,13 +50,13 @@ const updateMe = (req, res, next) => {
       new: true,
       runValidators: true,
     },
-  )
+  ).orFail(new NotFoundError(NOTFOUND_ERROR_USER_TEXT))
     .then((user) => res.send({
       name: user.email,
       about: user.name,
     }))
     .catch((err) => {
-      if (err.name === 'ValidationError') return next(new ValidationError('Произошла ошибка, введенные данные неверны.'));
+      if (err.name === 'ValidationError') return next(new ValidationError(VALIDATION_ERROR_TEXT));
       return next(err);
     });
 };
@@ -66,8 +75,8 @@ const createUser = (req, res, next) => {
       _id: user._id,
     }))
     .catch((err) => {
-      if (err.code === 11000) return next(new DuplicateError('Уже есть пользователь с данным email.'));
-      if (err.name === 'ValidationError') return next(new ValidationError('Произошла ошибка, введенные данные неверны.'));
+      if (err.code === 11000) return next(new DuplicateError(DUPLICATE_ERROR_EMAIL_TEXT));
+      if (err.name === 'ValidationError') return next(new ValidationError(VALIDATION_ERROR_TEXT));
       return next(err);
     });
 };
@@ -86,9 +95,9 @@ const login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       });
-      res.send({ message: 'Успешный логин' });
+      res.send({ message: LOGIN_SUCCESS_TEXT });
     })
-    .catch((err) => next(new TokenError(`Неверный логин или пароль, ${err.message}`)));
+    .catch(() => next(new TokenError(TOKEN_ERROR_TEXT)));
 };
 
 const logout = (req, res) => {
@@ -97,7 +106,7 @@ const logout = (req, res) => {
     httpOnly: true,
     sameSite: true,
   });
-  res.send({ message: 'Успешный логаут' });
+  res.send({ message: LOGOUT_SUCCESS_TEXT });
 };
 
 module.exports = {
