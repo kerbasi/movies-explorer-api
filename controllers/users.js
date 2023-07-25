@@ -52,8 +52,8 @@ const updateMe = (req, res, next) => {
     },
   ).orFail(new NotFoundError(NOTFOUND_ERROR_USER_TEXT))
     .then((user) => res.send({
-      name: user.email,
-      about: user.name,
+      email: user.email,
+      name: user.name,
     }))
     .catch((err) => {
       if (err.name === 'ValidationError') return next(new ValidationError(VALIDATION_ERROR_TEXT));
