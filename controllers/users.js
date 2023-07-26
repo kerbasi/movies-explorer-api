@@ -56,6 +56,7 @@ const updateMe = (req, res, next) => {
       name: user.name,
     }))
     .catch((err) => {
+      if (err.code === 11000) return next(new DuplicateError(DUPLICATE_ERROR_EMAIL_TEXT));
       if (err.name === 'ValidationError') return next(new ValidationError(VALIDATION_ERROR_TEXT));
       return next(err);
     });
