@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 app.use(helmet());
 app.use(limiter);
-app.use(cors({ credentials: true, origin: 'http://localhost:3001' }));
+app.use(cors({ credentials: true, origin: ['http://localhost:3001', 'https://localhost:3001', 'http://bitfilms.nomoredomains.xyz', 'https://bitfilms.nomoredomains.xyz'] }));
 
 app.use(routes);
 
