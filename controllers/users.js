@@ -84,8 +84,10 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
+  let name = '';
   return User.findUserByCredentials(email, password)
     .then((user) => {
+      name = user.name;
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV !== 'production' ? SECRET_KEY_DEV : SECRET_KEY,
@@ -96,7 +98,7 @@ const login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       });
-      res.send({ message: LOGIN_SUCCESS_TEXT });
+      res.send({ message: LOGIN_SUCCESS_TEXT, name });
     })
     .catch(() => next(new TokenError(TOKEN_ERROR_TEXT)));
 };
