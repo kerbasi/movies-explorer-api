@@ -23,7 +23,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, mustBeFilled('description')],
   },
-  image: {
+  img: {
     type: String,
     required: [true, mustBeFilled('image')],
     validate: {
@@ -41,7 +41,6 @@ const movieSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: [true, mustBeFilled('thumbnail')],
     validate: {
       validator: (url) => isUrl(url),
       message: (props) => `${props.value} неправильный URL`,
@@ -53,6 +52,7 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: Number,
+    unique: [true, 'Поле movieId должно быть уникальным'],
     required: [true, mustBeFilled('movieId')],
   },
   nameRU: {

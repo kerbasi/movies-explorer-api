@@ -25,8 +25,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 app.use(helmet());
 app.use(limiter);
-
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3001' }));
 
 app.use(routes);
 

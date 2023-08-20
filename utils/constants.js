@@ -10,7 +10,7 @@ const SERVER_ERROR = 500;
 
 const LOGIN_SUCCESS_TEXT = 'Успешный логин.';
 const LOGOUT_SUCCESS_TEXT = 'Успешный логаут.';
-const DELETE_MOVIE_SUCCESS_TEXT = 'Успешный логаут.';
+const DELETE_MOVIE_SUCCESS_TEXT = 'Успешное удаление фильма';
 const VALIDATION_ERROR_TEXT = 'Произошла ошибка, введенные данные неверны.';
 const VALIDATION_ERROR_ID_TEXT = 'Некоректно задан id.';
 const TOKEN_ERROR_TEXT = 'Неверный логин или пароль.';
